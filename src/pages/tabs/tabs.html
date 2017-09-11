@@ -1,5 +1,19 @@
-<ion-tabs>
-  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>
-</ion-tabs>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-row>
+      <ion-title>MSQLC</ion-title>
+      <button color="light" ion-button icon-only clear (click)="presentPopover($event)">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-tabs>
+    <ion-tab [root]="chat" tabTitle="聊天" tabIcon="ios-chatbubbles"></ion-tab>
+    <ion-tab [root]="contact" tabTitle="通讯录" tabIcon="contacts"></ion-tab>
+    <ion-tab [root]="discover" tabTitle="发现" tabIcon="compass"></ion-tab>
+    <ion-tab [root]="user" tabTitle="我" tabIcon="person"></ion-tab>
+  </ion-tabs>
+</ion-content>

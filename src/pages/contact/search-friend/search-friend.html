@@ -1,0 +1,34 @@
+<!--
+  Generated template for the SearchFriendPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>添加朋友</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary"><ion-icon name="search"></ion-icon></ion-label>
+      <ion-input placeholder="用户名/手机号" [(ngModel)]="search_text" (keyup)="searchFrind()"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-item *ngFor="let user of users; let i = index" (click)="addFriend(user._id)">
+      <ion-avatar item-start>
+        <img src={{avatars[i]}}>
+      </ion-avatar>
+      <h2>{{user.username}}</h2>
+      <p>{{mottos[i]}}</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

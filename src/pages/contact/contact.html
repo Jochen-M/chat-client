@@ -1,17 +1,18 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Contact
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<!--
+  Generated template for the ContactPage page.
 
-<ion-content>
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-content padding>
   <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-left></ion-icon>
-      @ionicframework
+    <ion-item *ngFor="let friend of friends; let i = index" (click)="chatWith(friend)">
+      <ion-avatar item-start>
+        <img src={{avatars[i]}}>
+      </ion-avatar>
+      <h2>{{friend.username}}</h2>
+      <p>{{mottos[i]}}</p>
     </ion-item>
   </ion-list>
 </ion-content>
