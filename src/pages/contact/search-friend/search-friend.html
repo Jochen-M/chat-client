@@ -14,20 +14,20 @@
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-label color="primary"><ion-icon name="search"></ion-icon></ion-label>
-      <ion-input placeholder="用户名/手机号" [(ngModel)]="search_text" (keyup)="searchFrind()"></ion-input>
-    </ion-item>
-  </ion-list>
+
+  <ion-searchbar
+    [(ngModel)]="search_text"
+    [showCancelButton]="true"
+    (ionInput)="searchFriend()">
+  </ion-searchbar>
 
   <ion-list>
-    <ion-item *ngFor="let user of users; let i = index" (click)="addFriend(user._id)">
+    <ion-item *ngFor="let user of users; let i = index" (click)="presentPrompt(user._id)">
       <ion-avatar item-start>
-        <img src={{avatars[i]}}>
+        <img src={{avatars[i%8]}}>
       </ion-avatar>
       <h2>{{user.username}}</h2>
-      <p>{{mottos[i]}}</p>
+      <p>{{mottos[i%8]}}</p>
     </ion-item>
   </ion-list>
 

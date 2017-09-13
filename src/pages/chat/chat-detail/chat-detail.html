@@ -5,20 +5,35 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="primary">
     <ion-title>{{friend.username}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content style="background-color:#FAF9DE;">
+  <ion-row *ngFor="let message of messages; let i = index" justify-content-between>
+    <ion-col *ngIf="message['f_user']==friend['_id']">
+      <ion-chip style="background-color:#FFFFFF;">
+        <ion-avatar>
+          <img src={{avatars[1]}}>
+        </ion-avatar>
+        <ion-label>{{message.content}}</ion-label>
+      </ion-chip>
+    </ion-col>
+    <ion-col></ion-col>
+    <ion-col *ngIf="message['f_user']==user_id" text-right>
+      <ion-chip style="background-color:#CBB4CA;">
+        <ion-label>{{message.content}}</ion-label>
+        <ion-avatar>
+          <img src={{avatars[6]}}>
+        </ion-avatar>
+      </ion-chip>
+    </ion-col>
+  </ion-row>
 </ion-content>
 
 <ion-footer>
-
   <ion-toolbar style="padding:0;">
     <ion-item>
       <button ion-button icon-only clear item-start>
@@ -31,5 +46,4 @@
       <button ion-button item-end (click)="sendMessage()">发送</button>
     </ion-item>
   </ion-toolbar>
-
 </ion-footer>

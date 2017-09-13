@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, App, LoadingController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import { ChatProvider } from '../../providers/chat/chat';
 import { UserProvider } from '../../providers/user/user';
 
 import { TabsPage } from '../tabs/tabs';
@@ -27,10 +28,12 @@ export class LoginPage {
     public navParams: NavParams,
     public app: App,
     public storage: Storage,
+    public chatProvider: ChatProvider,
     public userProvider: UserProvider,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
   ) {
+    console.log('constructor LoginPage');
   }
 
   ionViewDidLoad() {
@@ -53,6 +56,7 @@ export class LoginPage {
               this.storage.set('token', data.token);
               this.storage.set('user_id', data.user_id);
               this.storage.set('username', data.username);
+              this.chatProvider.online(data.user_id);
               this.app.getRootNav().setRoot(TabsPage);
             } else {
               this.alertCtrl.create({

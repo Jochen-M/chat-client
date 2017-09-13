@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as io from 'socket.io-client';
-import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs/Observable';
 
+import { Message } from '../../models/message.model';
+
+import { SERVER_HOST } from '../config';
 import { SOCKET_HOST } from '../config';
 
 /*
@@ -15,31 +18,22 @@ import { SOCKET_HOST } from '../config';
 @Injectable()
 export class ChatProvider {
 
+  url: string = SERVER_HOST + '/message/';
   chat = io(SOCKET_HOST + '/chat');
-  f_uid: string = '';
-  chat_id: string = '';
+  uid: string = '';
 
   constructor(
-    public http: Http,
-    public storage: Storage
+    public http: Http
   ) {
-    this.storage.get('uesr_id')
-    .then((user_id) => {
-      if(user_id) {
-        this.f_uid = user_id;
-      }
-    });
+  }
 
-    this.chat.connect();
+  online(uid) {
+    this.uid = uid;
+
+    this.chat.emit('online', this.uid);
 
     this.chat.on('connect', () => {
       console.log('Connected to server.');
-      this.chat_id = this.chat.id;
-      this.storage.set('socket_id', this.chat.id);
-    });
-
-    this.chat.on('msg', (data) => {
-      console.log(data)
     });
 
     this.chat.on('disconnect', () => {
@@ -47,8 +41,31 @@ export class ChatProvider {
     });
   }
 
-  sendMessage(t_uid, message) {
-    this.chat.emit('message', this.f_uid, t_uid, message);
+  sendMessage(f_uid, t_uid, message) {
+    this.chat.emit('message', f_uid, t_uid, message);
+  }
+
+  getMessages(f_uid, t_uid) {
+    let params = {
+      f_uid: f_uid,
+      t_uid: t_uid
+    };
+    return this.http.post(this.url + 'getMessages', params)
+      .map(res => res.json())
+  }
+
+  leave(uid) {
+    this.chat.emit('leave', uid);
+  }
+
+  // 观察者模式
+  msgObserver() {
+    let observable = new Observable(observer => {
+      this.chat.on('msg', (f_uid, t_uid, message) => {
+        observer.next(new Message(f_uid, t_uid, message));
+      })
+    })
+    return observable;
   }
 
 }

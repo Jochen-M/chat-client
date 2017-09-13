@@ -16,7 +16,10 @@ export class TabsPage {
   constructor(
     public popoverCtrl: PopoverController
   ) {
+  }
 
+  ionViewDidLoad() {
+    console.log('TabsPage ionViewDidLoad');
   }
 
   presentPopover(event) {

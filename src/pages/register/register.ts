@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, LoadingController, AlertController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -28,7 +27,6 @@ export class RegisterPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public app: App,
-    public storage: Storage,
     public userProvider: UserProvider,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController

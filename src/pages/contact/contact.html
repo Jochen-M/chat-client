@@ -9,10 +9,10 @@
   <ion-list>
     <ion-item *ngFor="let friend of friends; let i = index" (click)="chatWith(friend)">
       <ion-avatar item-start>
-        <img src={{avatars[i]}}>
+        <img src={{avatars[i%8]}}>
       </ion-avatar>
       <h2>{{friend.username}}</h2>
-      <p>{{mottos[i]}}</p>
+      <p>{{mottos[i%8]}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

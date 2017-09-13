@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
-
 import { Storage } from '@ionic/storage';
+
+import { ChatProvider } from '../../providers/chat/chat';
 
 import { LoginPage } from '../login/login';
 
@@ -17,14 +18,25 @@ import { LoginPage } from '../login/login';
   selector: 'page-user',
   templateUrl: 'user.html',
 })
-export class UserPage {
+export class UserPage implements OnInit {
+
+  user_id: string = '';
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public app: App,
-    public storage: Storage
+    public storage: Storage,
+    public chatProvider: ChatProvider
   ) {
+  }
+
+  async ngOnInit() {
+    console.log('UserPage ngOnInit');
+    let user_id = await this.storage.get('user_id');
+    if(user_id) {
+      this.user_id = user_id;
+    }
   }
 
   ionViewDidLoad() {
@@ -32,7 +44,7 @@ export class UserPage {
   }
 
   logout() {
-    // TODO
+    this.chatProvider.leave(this.user_id);
     this.storage.clear()
       .then(this.app.getRootNav().setRoot(LoginPage));
   }
