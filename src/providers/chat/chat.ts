@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { Message } from '../../models/message.model';
 
-import { SERVER_HOST } from '../config';
 import { SOCKET_HOST } from '../config';
 
 /*
@@ -18,7 +17,6 @@ import { SOCKET_HOST } from '../config';
 @Injectable()
 export class ChatProvider {
 
-  url: string = SERVER_HOST + '/message/';
   chat = io(SOCKET_HOST + '/chat');
   uid: string = '';
 
@@ -45,24 +43,32 @@ export class ChatProvider {
     this.chat.emit('message', f_uid, t_uid, message);
   }
 
-  getMessages(f_uid, t_uid) {
-    let params = {
-      f_uid: f_uid,
-      t_uid: t_uid
-    };
-    return this.http.post(this.url + 'getMessages', params)
-      .map(res => res.json())
-  }
-
   leave(uid) {
     this.chat.emit('leave', uid);
   }
 
-  // 观察者模式
+  addFriend(f_uid, t_uid, request_info) {
+    this.chat.emit('add-friend', f_uid, t_uid, request_info);
+  }
+
+  // 观察者模式 - 观察新消息的到来
   msgObserver() {
     let observable = new Observable(observer => {
       this.chat.on('msg', (f_uid, t_uid, message) => {
         observer.next(new Message(f_uid, t_uid, message));
+      })
+    })
+    return observable;
+  }
+
+  // 观察者模式 - 观察新好友请求的到来
+  addFriendObserver() {
+    let observable = new Observable(observer => {
+      this.chat.on('friend-request', (f_uid, request_info) => {
+        observer.next({
+          f_uid: f_uid,
+          request_info: request_info
+        });
       })
     })
     return observable;

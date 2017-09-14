@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import { ChatProvider } from '../../../providers/chat/chat';
 import { UserProvider } from '../../../providers/user/user';
 import { MockProvider } from '../../../providers/mock/mock';
 
@@ -33,6 +34,7 @@ export class SearchFriendPage {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public storage: Storage,
+    public chatProvider: ChatProvider,
     public userProvider: UserProvider,
     public mockProvider: MockProvider
   ) {
@@ -57,7 +59,7 @@ export class SearchFriendPage {
   }
 
   searchFriend(event) {
-    this.userProvider.searchFriend(this.token, this.search_text)
+    this.userProvider.searchFriend(this.token, this.user_id, this.search_text)
       .subscribe(
         data => {
           console.log(data);
@@ -72,16 +74,8 @@ export class SearchFriendPage {
       );
   }
 
-  addFriend(t_uid) {
-    this.userProvider.addFriend(this.token, this.user_id, t_uid)
-      .subscribe(
-        data => {
-          console.log(data);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+  addFriend(t_uid, request_info) {
+    this.chatProvider.addFriend(this.user_id, t_uid, request_info);
   }
 
   presentPrompt(t_uid) {
@@ -97,7 +91,7 @@ export class SearchFriendPage {
         {
           text: '添加',
           handler: data => {
-            this.addFriend(t_uid);
+            this.addFriend(t_uid, data.request_info);
           }
         },
         {

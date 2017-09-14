@@ -7,6 +7,15 @@
 
 <ion-content padding>
   <ion-list>
+    <ion-item *ngIf="requests.length>0" (click)="dealRequests()">
+      <ion-icon name="person-add" color="primary" item-start></ion-icon>
+      新的朋友
+      <ion-badge item-end>{{requests.length}}</ion-badge>
+    </ion-item>
+    <ion-item *ngIf="requests.length==0" (click)="searchFriend()">
+      <ion-icon name="person-add" color="primary" item-start></ion-icon>
+      新的朋友
+    </ion-item>
     <ion-item *ngFor="let friend of friends; let i = index" (click)="chatWith(friend)">
       <ion-avatar item-start>
         <img src={{avatars[i%8]}}>

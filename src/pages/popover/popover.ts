@@ -26,7 +26,7 @@ export class PopoverPage {
     console.log('ionViewDidLoad PopoverPage');
   }
 
-  addFrind() {
+  searchFrind() {
     this.viewCtrl.dismiss();
     this.app.getRootNav().push('SearchFriendPage');
   }

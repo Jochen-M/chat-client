@@ -35,12 +35,12 @@ export class UserProvider {
       }).map(res => res.json());
   }
 
-  searchFriend(token, search_text) {
+  searchFriend(token, user_id, search_text) {
     let headers = new Headers({
       'Authorization': 'Bearer ' + token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.post(this.url + 'search', {search_text: search_text}, options)
+    return this.http.post(this.url + 'search', {user_id: user_id, search_text: search_text}, options)
       .map(res => res.json());
   }
 
@@ -49,9 +49,23 @@ export class UserProvider {
       'Authorization': 'Bearer ' + token
     });
     let options = new RequestOptions({headers: headers});
-    return this.http.post(this.url + 'addFriend', {
+    return this.http.post(this.url + 'dealRequest', {
         f_uid: f_uid,
-        t_uid: t_uid
+        t_uid: t_uid,
+        agree: true
+      }, options)
+      .map(res => res.json());
+  }
+
+  rejectRequest(token, f_uid, t_uid) {
+    let headers = new Headers({
+      'Authorization': 'Bearer ' + token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(this.url + 'dealRequest', {
+        f_uid: f_uid,
+        t_uid: t_uid,
+        agree: false
       }, options)
       .map(res => res.json());
   }
@@ -62,6 +76,15 @@ export class UserProvider {
     });
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.url + 'initFriends', {user_id: user_id}, options)
+      .map(res => res.json());
+  }
+
+  getUserById(token, user_id) {
+    let headers = new Headers({
+      'Authorization': 'Bearer ' + token
+    });
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(this.url + 'getUserById', {user_id: user_id}, options)
       .map(res => res.json());
   }
 

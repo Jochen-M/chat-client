@@ -14,6 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ChatProvider } from '../providers/chat/chat';
 import { UserProvider } from '../providers/user/user';
 import { MockProvider } from '../providers/mock/mock';
+import { MessageProvider } from '../providers/message/message';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MockProvider } from '../providers/mock/mock';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ChatProvider,
     UserProvider,
-    MockProvider
+    MockProvider,
+    MessageProvider
   ]
 })
 export class AppModule {}

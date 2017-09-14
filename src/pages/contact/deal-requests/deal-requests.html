@@ -1,0 +1,38 @@
+<!--
+  Generated template for the DealRequestsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>好友请求</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item-sliding *ngFor="let request of requests; let i = index" >
+      <ion-item>
+        <ion-avatar item-start>
+          <img src={{avatars[i%8]}}>
+        </ion-avatar>
+        <h2>{{request.f_user.username}}</h2>
+        <p>{{mottos[i%8]}}</p>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="primary">
+          <ion-icon name="checkmark" (click)="agreeRequest(request)"></ion-icon>
+          同意
+        </button>
+        <button ion-button color="danger">
+          <ion-icon name="close" (click)="rejectRequest(request)"></ion-icon>
+          拒绝
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

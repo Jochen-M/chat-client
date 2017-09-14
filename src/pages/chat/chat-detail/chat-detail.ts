@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 
 import { ChatProvider } from '../../../providers/chat/chat';
+import { MessageProvider } from '../../../providers/message/message';
 import { MockProvider } from '../../../providers/mock/mock';
 
 import { User } from '../../../models/user.model';
@@ -34,6 +35,7 @@ export class ChatDetailPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public chatProvider: ChatProvider,
+    public messageProvider: MessageProvider,
     public mockProvider: MockProvider,
   ) {
     console.log('constructor ChatDetailPage')
@@ -43,9 +45,9 @@ export class ChatDetailPage {
     this.mottos = mockProvider.getMottos();
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     console.log('ionViewDidLoad ChatDetailPage');
-    this.chatProvider.getMessages(this.user_id, this.friend._id)
+    this.messageProvider.getMessages(this.user_id, this.friend._id)
       .subscribe(
         data => {
           console.log(data);
@@ -78,9 +80,9 @@ export class ChatDetailPage {
     if(this.message.trim() != ''){
       this.chatProvider.sendMessage(this.user_id, this.friend._id, this.message);
       this.messages.push(new Message(this.user_id, this.friend._id, this.message));
+      this.content.scrollToBottom();
       this.message = '';
     }
-    this.content.scrollToBottom();
   }
 
 }

@@ -1,8 +1,9 @@
 export class Message {
   _id: string;
-  f_user: string;
-  t_user: string;
+  f_user: any;
+  t_user: any;
   content: string;
+  type: string;
   created_at: any;
 
   constructor(f_user, t_user, content) {
