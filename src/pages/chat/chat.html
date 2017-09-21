@@ -6,5 +6,13 @@
 -->
 
 <ion-content padding>
-
+  <ion-list>
+    <ion-item *ngFor="let chat of chats; let i = index" (click)="chatWith(chat.friend)">
+      <ion-avatar item-start>
+        <img src={{avatars[i%8]}}>
+      </ion-avatar>
+      <h2>{{chat.friend.username}}</h2>
+      <p>{{chat.content}}</p>
+    </ion-item>
+  </ion-list>
 </ion-content>

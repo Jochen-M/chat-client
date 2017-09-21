@@ -33,4 +33,8 @@ export class MessageProvider {
       .map(res => res.json());
   }
 
+  initChats(user_id) {
+    return this.http.post(this.url + 'initChats', {user_id: user_id})
+      .map(res => res.json());
+  }
 }
